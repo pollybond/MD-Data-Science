@@ -8,6 +8,8 @@
 select product_name 
 from products
 where unit_price between 3 and 6;
+```
+![Результат Задача 1](task1_result.png)
 
 ## Задача 2
 
@@ -17,6 +19,8 @@ where unit_price between 3 and 6;
 select min(unit_price) as min_price 
 from products
 where category_id = 1;
+```
+![Результат Задача 2](task2_result.png)
 
 ## Задача 3
 
@@ -35,3 +39,5 @@ select supplier_id, max(unit_price) as max_price
 from products
 where supplier_id in (1, 3, 5)
 group by supplier_id;
+```
+![Результат Задача 3](task3_result.png)
