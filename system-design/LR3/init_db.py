@@ -33,57 +33,31 @@ def load_test_data():
             )
             db.add(user)
 
-
-# Загрузка тестовых данных
-def load_test_data():
-    db = SessionLocal()
-
     # Создание мастер-пользователя
-    master_user = UserDB(
+    add_user(
         username="admin",
         first_name="Admin",
         last_name="Admin",
         hashed_password=pwd_context.hash("secret"),
         email="admin@example.com",
     )
-    db.add(master_user)
 
     # Создание тестовых пользователей
-    user1 = UserDB(
+    add_user(
         username="user1",
         first_name="Ivan",
         last_name="Ivanov",
         hashed_password=pwd_context.hash("password1"),
         email="ivan.ivanov@example.com",
     )
-    db.add(user1)
 
-    user2 = UserDB(
+    add_user(
         username="user2",
         first_name="Anna",
         last_name="Petrova",
         hashed_password=pwd_context.hash("password2"),
         email="anna.petrova@example.com",
     )
-    db.add(user2)
-
-    # Создание тестовых маршрутов
-    route1 = RouteDB(user_id=user1.id, start_point="Moscow", end_point="Kazan")
-    db.add(route1)
-
-    route2 = RouteDB(user_id=user2.id, start_point="Kazan", end_point="Ufa")
-    db.add(route2)
-
-    # Создание тестовых поездок
-    trip1 = TripDB(
-        route_id=route1.id, driver_id=user1.id, passengers=[user2.id], date="2024-10-01T10:00:00"
-    )
-    db.add(trip1)
-
-    trip2 = TripDB(
-        route_id=route2.id, driver_id=user2.id, passengers=[user1.id], date="2024-10-02T10:00:00"
-    )
-    db.add(trip2)
 
     db.commit()
     db.close()
