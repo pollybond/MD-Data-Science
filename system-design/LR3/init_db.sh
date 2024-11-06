@@ -9,5 +9,5 @@ done
 # Очистка базы данных
 PGPASSWORD=$POSTGRES_PASSWORD psql -h "db" -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "DROP SCHEMA public CASCADE; CREATE SCHEMA public;"
 
-# Запуск вашего приложения
+# Запуск приложения
 exec "$@"
