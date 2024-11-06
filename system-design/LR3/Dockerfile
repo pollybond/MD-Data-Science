@@ -1,24 +1,24 @@
-# Используем базовый образ Python
+# Базовый образ Python
 FROM python:3.9-slim
 
-# Устанавливаем рабочую директорию
+# Рабочая директория
 WORKDIR /app
 
-# Копируем зависимости
+# Копирование зависимостей
 COPY requirements.txt .
 
-# Устанавливаем зависимости
+# Установка зависимостей
 RUN apt-get update && apt-get install -y --no-install-recommends \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Копируем все файлы проекта
+# Копирование всех файлов проекта
 COPY . .
 
-# Устанавливаем права на выполнение для init_db.sh
+# Права на выполнение для init_db.sh
 RUN chmod +x init_db.sh
 
-# Запускаем приложение
+# Запуск приложения
 CMD ["sh", "-c", "/app/init_db.sh && python init_db.py && uvicorn blablacar_jwt:app --host 0.0.0.0 --port 8000"]
