@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: archdb
+      POSTGRES_DB: carpooling
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    volumes:
+      - mongo_data:/data/db
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: archdb
+      POSTGRES_DB: carpooling
+      SQLALCHEMY_DATABASE_URL: postgresql://postgres:archdb@db/carpooling
+      MONGO_URI: mongodb://root:pass@mongo:27017/
+      REDIS_URL: redis://redis:6379/0
+    depends_on:
+      - db
+      - mongo
+      - redis
+    command: >
+      sh -c "sleep 10 && python init_db_mongo.py && python init_db_pg.py && uvicorn blablacar_jwt:app --host 0.0.0.0 --port 8000"
+    volumes:
+      - .:/app
+
+volumes:
+  postgres_data:
+  mongo_data:
