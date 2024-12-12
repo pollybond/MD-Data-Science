@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+psycopg2-binary
+sqlalchemy
+bcrypt==3.2.0
+passlib==1.7.4
+python-jose[cryptography]
+python-multipart
+pymongo
+redis
+confluent-kafka
